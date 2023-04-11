@@ -20,6 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 if(BUILD_TESTING)
@@ -32,5 +33,21 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+add_executable(patrol_node src/patrol.cpp) 
+#Generates a c++ executeable  
+ament_target_dependencies(patrol_node rclcpp geometry_msgs sensor_msgs) 
+#adds all the ament target dependencies of the executable 
+install(TARGETS 
+   patrol_node 
+   DESTINATION lib/${PROJECT_NAME} 
+ ) 
+#This snippet will currently install our executable node (simple_node) into our install space inside the ROS2 workspace 
+install(DIRECTORY 
+  launch 
+  DESTINATION share/${PROJECT_NAME}/ 
+) 
+
+
 
 ament_package()
