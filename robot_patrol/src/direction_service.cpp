@@ -6,6 +6,15 @@
 class DirectionService : public rclcpp::Node
 {
 
+    public:
+        DirectionService() : Node("direction_service")
+        {
+            service_ = this->create_service<robot_patrol::srv::GetDirections>(
+            "/direction_service",
+            std::bind(&DirectionService::handle_service, this, std::placeholders::_1, std::placeholders::_2)); 
+        }
+
+        
 
 
 };
