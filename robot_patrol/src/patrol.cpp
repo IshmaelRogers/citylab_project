@@ -2,6 +2,13 @@
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <algorithm>
+#include <chrono>
+#include <cmath>
+
+using namespacestd::chrono_literals;
+
+constexpr double linear_speed = 0.1;
+constexpr double obstacle_limit = 0.35;
 
 class Patrol : public rclcpp::Node
 {
