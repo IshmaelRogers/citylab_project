@@ -9,4 +9,10 @@ def generate_launch_description():
             name='patrol',
             output='screen',
         )
+        # RViz
+        ExecuteProcess(
+            cmd=['rviz2', '-d', 
+                 '/home/user/ros2_ws/src/robot_patrol/config/patrol_config.rviz'],
+            output='screen'
+        )
     ])
