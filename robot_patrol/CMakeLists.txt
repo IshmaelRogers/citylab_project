@@ -10,6 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(action_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 
@@ -28,7 +29,21 @@ endif()
 
 rosidl_generate_interfaces(${PROJECT_NAME}
 	"srv/GetDirection.srv"
+	"action/GoToPose.action"
 	DEPENDENCIES geometry_msgs sensor_msgs std_msgs
+)
+
+add_executable(go_to_pose_action src/go_to_pose_action.cpp)
+
+# 5) Link against required libraries
+ament_target_dependencies(go_to_pose_action
+  rclcpp
+  rclcpp_action
+  geometry_msgs
+  nav_msgs
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
 )
 
 add_executable(robot_patrol_client_node src/patrol_with_service.cpp)
@@ -59,6 +74,7 @@ patrol
 direction_service
 robot_patrol_client_node
 test_service 
+go_to_pose_action
 DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch
